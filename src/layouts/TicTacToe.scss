@@ -1,6 +1,12 @@
+section {
+  display: flex;
+  height: 100px;
+  width: 40%;
+  margin: auto;
 
-.hello {
-  h1 {
-
+  div {
+    height: 100px;
+    width: 33%;
+    border: 1px solid black;
   }
 }

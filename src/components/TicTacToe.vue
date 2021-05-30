@@ -1,50 +1,42 @@
 <template>
-  <div>
+  <div class="grid-container">
     <h1>{{ result }}</h1>
+
+    <section>
+      <div @click="makeMove(0,0)">{{ ticTacToe[0][0] }}</div>
+      <div @click="makeMove(0,1)">{{ ticTacToe[0][1] }}</div>
+      <div @click="makeMove(0,2)">{{ ticTacToe[0][2] }}</div>
+    </section>
+
+    <section>
+      <div @click="makeMove(1,0)">{{ ticTacToe[1][0] }}</div>
+      <div @click="makeMove(1,1)">{{ ticTacToe[1][1] }}</div>
+      <div @click="makeMove(1,2)">{{ ticTacToe[1][2] }}</div>
+    </section>
+
+    <section>
+      <div @click="makeMove(2,0)">{{ ticTacToe[2][0] }}</div>
+      <div @click="makeMove(2,1)">{{ ticTacToe[2][1] }}</div>
+      <div @click="makeMove(2,2)">{{ ticTacToe[2][2] }}</div>
+    </section>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'TicTacToe',
   props: ['msg'],
-  data() {
-    return {
-      ticTacToe: [
-        ['','',''],
-        ['','',''],
-        ['','','']
-      ],
-      result: 'Start The Game'
-    }
+  computed: {
+    ...mapGetters({
+      ticTacToe: 'ticTacToe',
+      result: 'result'
+    }),
   },
-  created() {
-    let [diagonalLeftTotal, diagonalRightTotal] = Array(2).fill('');
-
-    for(let row = 0; row < this.ticTacToe.length; row++) {
-      let [rowTotal, columnTotal] = Array(2).fill('');
-
-      for(let column = 0; column < this.ticTacToe.length; column++) {
-        // Row
-        rowTotal += this.ticTacToe[row][column]
-
-        // Column
-        columnTotal += this.ticTacToe[column][row]
-      }
-
-      // Diagonal Left
-      diagonalLeftTotal += this.ticTacToe[row][row]
-
-      // Diagonal Right
-      diagonalRightTotal += this.ticTacToe[row][this.ticTacToe.length - row - 1]
-
-      if (rowTotal == '111' || columnTotal == '111' || diagonalLeftTotal == '111' || diagonalRightTotal == '111') {
-        this.result = 'Player 1 Winner'
-        break
-      } else if (rowTotal == '222' || columnTotal == '222' || diagonalLeftTotal == '222' || diagonalRightTotal == '222') {
-        this.result = 'Player 2 Winner'
-        break
-      }
+  methods: {
+    makeMove(row, col) {
+      this.$store.dispatch('makeMove', {row, col})
     }
   }
 }
