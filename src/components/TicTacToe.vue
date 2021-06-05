@@ -31,12 +31,14 @@ export default {
   computed: {
     ...mapGetters({
       ticTacToe: 'ticTacToe',
-      result: 'result'
+      result: 'result',
+      gameOver: 'gameOver'
     }),
   },
   methods: {
     makeMove(row, col) {
-      this.$store.dispatch('makeMove', {row, col})
+      this.$store.dispatch('userMove', {row, col})
+      if(!this.gameOver) {this.$store.dispatch('computerMove');}
     }
   }
 }
